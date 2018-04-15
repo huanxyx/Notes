@@ -1,0 +1,91 @@
+###ServletAPI
+- ####HttpServletRequest
+	- 获取客户端的信息(Remote)
+		- `String getRemoteAddr()`:获取客户端的IP地址
+		- `int getRemotePort():`获取客户端的端口号
+	- 获取客户端传输过来的参数(Parameter)
+		- `String getParameter(String)`:获取客户端传输指定名字的第一个参数值
+		- `Map<String, String[]> getParameterMap()`:获取客户端传输的参数map
+		- `String[] getParameterValues(String)`:获取客户端传输指定名字的参数的所有值
+	- 获取请求头(Header)
+		- `getHeader(String)`:获取http头的信息
+	- 获取客户端请求的URL(URL)
+		- `getRequestURL()`:获取完整的请求地址,不带参数
+		- `getRequestURI()`:获取(/工程名/请求路径)
+		- `getContextPath()`:获取上下问路径(/工程名)
+		- `getServletPath()`:获取(/请求路径)
+		- `getServerPort()`:获取URL请求的端口号(8080)
+		- `getServerName()`:获取URL请求的名字(域名或者ip地址)
+		- `getQueryString`:获取URL中的参数字符串
+	- 操作request的属性(Attribute)
+		- `setAttribute(String,Object)`:设置Attribute
+		- `getAttribute(String)`:获取Attribute
+		- `removeAttribute(String)`:删除Attribute
+	- 编码(CharacterEncoding)
+		- `setCharacterEncoding(String)`:设置请求的编码
+		- `getCharacterEncoding()`:获取请求的编码
+	- 其他
+		- `getSession()`:获取HttpSession对象
+		- `getCookies()`:获取请求的Cookie
+		- `getServletContext()`:获取ServletContext对象
+		- `getRequestDispatcher(String)`:获取转发对象
+		- `getContentType`:获取请求的MIME类型,未知返回空值
+- ####HttpServletResponse
+	- 操作响应头
+		- `setContentType(String)`:设置响应的数据类型(MIME)
+		- `setHeader(String,String)`:设置响应头
+		- `setStatus(int)`:设置响应的状态码
+		- `sendRedirect(String)`:给定路径,重定向,必须是绝对的URL地址
+		- `addCookie(Cookie)`:操作Cookie
+	- 操作响应的数据
+		- `setCharacterEncoding(String)`:设置Response的编码方式
+		- `getWriter()`:获取文本流
+		- `getOutputStream`:获取字节流
+- ####HttpSession
+	- 操作session的属性(Attribute)
+		- `setAttribute(String, Object)`:设置
+		- `getAttribute(String)`:获取
+		- `removeAttribute(String)`:删除
+	- 操作session本身
+		- `getId`:获取sessionId
+		- `invalidate()`:使session失效
+		- `setMaxInactiveInterval(int)`:设置回话的最大持续时间,单位是秒,负数表示不失效
+		- `getMaxInactiveInterval()`:获取回话的最大持续时间
+		- `getCreationTime()`:获取session创建的时间
+		- `getLastAccessedTime`:获取session最后访问的时间
+	- 配置文件中操作session的声明周期
+		```
+		<!-- 设置Session的有效时间:以分钟为单位-->
+    	<session-config>
+        	<session-timeout>15</session-timeout>
+    	</session-config>
+        ```
+- ####ServletContext
+	- 如何获取ServletContext
+		- 在Filer中通过FilterConfig的getServletContext方法
+		- 在HttpServlet中直接获取(this.getServletContext方法)
+		- 通过HttpServletRequest获取
+		- 通过ServletConfig获取
+	- 操作application的属性(Attribute)
+		- `setAttribute(String, Object)`:设置
+		- `getAttribute(String)`:获取
+		- `removeAttribute(String)`:删除
+	- 操作初始化参数
+		- `getInitParameter`:获取web配置文件中的初始化参数
+	- 获取资源
+		- `String getResource(String)`:获取当前项目中文件的绝对路径
+		- `InputStream getResourceAsStream(String)`:获取当前项目中文件的输入流
+		- `URL getResource(String)`:获取当前项目中文件的URL对象
+- ####RequestDispatcher
+	- `include`:
+		- 此方法包含相应中某个资源的内容
+		- 被包含者不嗯给你设置response的响应状态和响应头.
+		- 被包含者的request获取的URL和原本的request的一样
+	- `forward`:
+		- 必须保证此响应没有提交,也就是没有使用Response的输出流对象,即使使用了,也会被清空,如果缓冲区被刷新提交(flush),则会抛出异常
+		- forward后的servlet中的request和原本的request不是同一个.(通过request获取的URL不是一样的)
+		- forward前后的输出语句都会被忽略.
+- ####拓展
+	- Cookie
+		- Cookie操作使用`URLEncoder.encode(String, String)`进行编码
+		- 使用`URLDecoder.decode(String, String)`进行解码
