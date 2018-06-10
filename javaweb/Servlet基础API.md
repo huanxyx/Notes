@@ -1,5 +1,5 @@
-###ServletAPI
-- ####HttpServletRequest
+### ServletAPI
+- #### HttpServletRequest
 	- 获取客户端的信息(Remote)
 		- `String getRemoteAddr()`:获取客户端的IP地址
 		- `int getRemotePort():`获取客户端的端口号
@@ -30,7 +30,7 @@
 		- `getServletContext()`:获取ServletContext对象
 		- `getRequestDispatcher(String)`:获取转发对象
 		- `getContentType`:获取请求的MIME类型,未知返回空值
-- ####HttpServletResponse
+- #### HttpServletResponse
 	- 操作响应头
 		- `setContentType(String)`:设置响应的数据类型(MIME)
 		- `setHeader(String,String)`:设置响应头
@@ -41,7 +41,7 @@
 		- `setCharacterEncoding(String)`:设置Response的编码方式
 		- `getWriter()`:获取文本流
 		- `getOutputStream`:获取字节流
-- ####HttpSession
+- #### HttpSession
 	- 操作session的属性(Attribute)
 		- `setAttribute(String, Object)`:设置
 		- `getAttribute(String)`:获取
@@ -60,7 +60,7 @@
         	<session-timeout>15</session-timeout>
     	</session-config>
         ```
-- ####ServletContext
+- #### ServletContext
 	- 如何获取ServletContext
 		- 在Filer中通过FilterConfig的getServletContext方法
 		- 在HttpServlet中直接获取(this.getServletContext方法)
@@ -76,7 +76,7 @@
 		- `String getResource(String)`:获取当前项目中文件的绝对路径
 		- `InputStream getResourceAsStream(String)`:获取当前项目中文件的输入流
 		- `URL getResource(String)`:获取当前项目中文件的URL对象
-- ####RequestDispatcher
+- #### RequestDispatcher
 	- `include`:
 		- 此方法包含相应中某个资源的内容
 		- 被包含者不嗯给你设置response的响应状态和响应头.
@@ -85,7 +85,7 @@
 		- 必须保证此响应没有提交,也就是没有使用Response的输出流对象,即使使用了,也会被清空,如果缓冲区被刷新提交(flush),则会抛出异常
 		- forward后的servlet中的request和原本的request不是同一个.(通过request获取的URL不是一样的)
 		- forward前后的输出语句都会被忽略.
-- ####拓展
+- #### 拓展
 	- Cookie
 		- Cookie操作使用`URLEncoder.encode(String, String)`进行编码
 		- 使用`URLDecoder.decode(String, String)`进行解码
